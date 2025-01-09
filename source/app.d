@@ -210,7 +210,8 @@ class AnisetteService {
 			"X-Apple-Locale": "en_US",
 			"X-Mme-Device-Id": v1Device.uniqueDeviceIdentifier,
 		];
-
+		string clientIp = req.remoteAddr;
+		log.infoF!"Connected from %s"(clientIp);
 		res.headers["Implementation-Version"] = brandingCode;
 		res.writeBody(responseJson.toString(JSONOptions.doNotEscapeSlashes), "application/json");
 		log.infoF!"[>>] 200 OK %s"(responseJson);
