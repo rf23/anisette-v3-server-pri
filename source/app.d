@@ -197,6 +197,8 @@ class AnisetteService {
 
 		import std.conv;
 		import std.json;
+		
+		string clientIp = req.remoteAddr;
 
 		JSONValue responseJson = [
 			"X-Apple-I-Client-Time": time.toISOExtString.split('.')[0] ~ "Z",
@@ -210,7 +212,7 @@ class AnisetteService {
 			"X-Apple-Locale": "en_US",
 			"X-Mme-Device-Id": v1Device.uniqueDeviceIdentifier,
 		];
-		string clientIp = req.remoteAddr;
+		
 		log.infoF!"Connected from %s"(clientIp);
 		res.headers["Implementation-Version"] = brandingCode;
 		res.writeBody(responseJson.toString(JSONOptions.doNotEscapeSlashes), "application/json");
