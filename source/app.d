@@ -198,7 +198,7 @@ class AnisetteService {
 		import std.conv;
 		import std.json;
 		
-		string clientIp = req.remoteAddr;
+		string clientIp = req.clientAddress.toAddressString();
 
 		JSONValue responseJson = [
 			"X-Apple-I-Client-Time": time.toISOExtString.split('.')[0] ~ "Z",
