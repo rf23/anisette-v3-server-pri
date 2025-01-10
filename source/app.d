@@ -198,20 +198,7 @@ int main(string[] args) {
 			}
 		);
 	}	
-	auto timer = setTimer(60.seconds, {
-		import vibe.http.client;
-
-			logInfo("The ping time is: %s", Clock.currTime());
-			requestHTTP("https://anisette-v3-server-pri.onrender.com/",
-				(scope req) {
-					req.method = HTTPMethod.GET;
-					//req.writeJsonBody(["name": "My Name"]);
-				},
-				(scope res) {
-					logInfo("Response: %s", res.bodyReader.readAllUTF8());
-				}
-			);
-			}, true);
+	auto timer = setTimer(60.seconds, &selfPing, true);
 
 	return runApplication(&args);
 }
