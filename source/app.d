@@ -17,6 +17,7 @@ import std.uni;
 import std.uuid;
 import std.zip;
 import std.datetime;
+import std.process : environment;
 
 import vibe.core.core;
 import vibe.core.log;
@@ -48,8 +49,12 @@ __gshared Duration timeout;
 
 void selfPing() 
 {
+	static int counter = 0;
 	import vibe.http.client;
-	logInfo("The ping time is: %s", Clock.currTime());
+
+	counter++;
+	
+	logInfo("The ping time is [%d]: %s", counter, Clock.currTime());
 	requestHTTP("https://anisette-v3-server-pri.onrender.com/",
 		(scope req) {
 			req.method = HTTPMethod.GET;
@@ -200,8 +205,12 @@ int main(string[] args) {
 	//
 	// self ping to keep it alive
 	//
-	
-	auto timer = setTimer(60.seconds, () => selfPing(), true);
+	auto keepalive = environment.get("KEEPALIVE", 60);
+	if (keepalive is null)
+	{
+		keepalive = 60;
+	}
+	auto timer = setTimer(seconds(keepalive), () => selfPing(), true);
 
 	return runApplication(&args);
 }
