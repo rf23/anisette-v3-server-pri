@@ -26,6 +26,7 @@ import vibe.http.router;
 import vibe.http.client;
 import vibe.stream.tls;
 import vibe.web.web;
+import vibe.stream.operations;
 
 import slf4d;
 import slf4d: Logger;
