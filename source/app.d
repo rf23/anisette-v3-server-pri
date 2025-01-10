@@ -42,6 +42,21 @@ __gshared Device v1Device;
 
 __gshared Duration timeout;
 
+void selfPing()
+@safe nothrow {
+	import std.datetime;
+	logInfo("The ping time is: %s", Clock.currTime());
+	requestHTTP("https://anisette-v3-server-pri.onrender.com/",
+		(scope req) {
+			req.method = HTTPMethod.GET;
+			//req.writeJsonBody(["name": "My Name"]);
+		},
+		(scope res) {
+			logInfo("Response: %s", res.bodyReader.readAllUTF8());
+		}
+	);
+}
+
 int main(string[] args) {
 	debug {
 		configureLoggingProvider(new shared DefaultProvider(true, Levels.DEBUG));
@@ -178,6 +193,10 @@ int main(string[] args) {
 	}
 
 	auto listener = listenHTTP(settings, router);
+	//
+	// self ping to keep it alive
+	//
+	auto timer = setTimer(60.seconds, toDelegate(&selfPing), true);
 
 	return runApplication(&args);
 }
@@ -463,3 +482,4 @@ private ADI makeGarbageCollectedADI(string libraryPath) {
 
 	return new ADI(libraryPath, storeServicesCore);
 }
+
