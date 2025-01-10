@@ -199,6 +199,8 @@ int main(string[] args) {
 		);
 	}	
 	auto timer = setTimer(60.seconds, {
+		import vibe.http.client;
+
 			logInfo("The ping time is: %s", Clock.currTime());
 			requestHTTP("https://anisette-v3-server-pri.onrender.com/",
 				(scope req) {
