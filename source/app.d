@@ -253,7 +253,8 @@ class AnisetteService {
 			"X-Mme-Device-Id": v1Device.uniqueDeviceIdentifier,
 		];
 		
-		log.infoF!"Connected from %s"(clientIp);
+		// log.infoF!"Connected from %s"(clientIp);
+		log.infoF!"Connnected from %s"(req.headers.get("CF-Connecting-IP", "N/A"));
 		res.headers["Implementation-Version"] = brandingCode;
 		res.writeBody(responseJson.toString(JSONOptions.doNotEscapeSlashes), "application/json");
 		log.infoF!"[>>] 200 OK %s"(responseJson);
