@@ -18,7 +18,7 @@ import std.uuid;
 import std.zip;
 import std.datetime;
 import std.process : environment;
-import std.typecons : Flag, Yes, No;
+import std.conv;
 
 import vibe.core.core;
 import vibe.core.log;
@@ -211,7 +211,7 @@ int main(string[] args) {
 	{
 		env = "60";
 	}
-	auto keepalive = parse!int(env);
+	auto keepalive = to!int(env);
 	auto timer = setTimer(seconds(keepalive), () => selfPing(), true);
 
 	return runApplication(&args);
