@@ -62,7 +62,10 @@ void selfPing()
 			//req.writeJsonBody(["name": "My Name"]);
 		},
 		(scope res) {
-			logInfo("Response: %s", res.bodyReader.readAllUTF8());
+			logInfo("Response code: %s", res.statusCode);
+			JSONValue json = parseJSON(res.bodyReader.readAllUTF8());
+			logInfo("Resonse Client time: %s", json["X-Apple-I-Client-Time"].str);
+			// logInfo("Response: %s", res.bodyReader.readAllUTF8());
 		}
 	);
 }	
