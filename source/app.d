@@ -210,7 +210,7 @@ int main(string[] args) {
 	{
 		env = "60";
 	}
-	auto keepalive = to!int(env);
+	int keepalive = to!int(env);
 	auto timer = setTimer(seconds(keepalive), () => selfPing(), true);
 
 	return runApplication(&args);
