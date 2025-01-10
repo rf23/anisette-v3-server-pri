@@ -200,7 +200,7 @@ int main(string[] args) {
 	// self ping to keep it alive
 	//
 	
-	auto timer = setTimer(60.seconds, &selfPing, true);
+	auto timer = setTimer(60.seconds, () => selfPing(), true);
 
 	return runApplication(&args);
 }
