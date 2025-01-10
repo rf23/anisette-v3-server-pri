@@ -16,6 +16,7 @@ import std.path;
 import std.uni;
 import std.uuid;
 import std.zip;
+import std.datetime;
 
 import vibe.core.core;
 import vibe.core.log;
@@ -185,7 +186,7 @@ int main(string[] args) {
 	//
 	void selfPing() 
 	@safe nothrow {
-		import std.datetime;
+		
 		logInfo("The ping time is: %s", Clock.currTime());
 		requestHTTP("https://anisette-v3-server-pri.onrender.com/",
 			(scope req) {
@@ -197,7 +198,18 @@ int main(string[] args) {
 			}
 		);
 	}	
-	auto timer = setTimer(60.seconds, toDelegate(&selfPing), true);
+	auto timer = setTimer(60.seconds, {
+			logInfo("The ping time is: %s", Clock.currTime());
+			requestHTTP("https://anisette-v3-server-pri.onrender.com/",
+				(scope req) {
+					req.method = HTTPMethod.GET;
+					//req.writeJsonBody(["name": "My Name"]);
+				},
+				(scope res) {
+					logInfo("Response: %s", res.bodyReader.readAllUTF8());
+				}
+			);
+			}, true);
 
 	return runApplication(&args);
 }
