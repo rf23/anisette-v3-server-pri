@@ -18,9 +18,11 @@ import std.uuid;
 import std.zip;
 
 import vibe.core.core;
+import vibe.core.log;
 import vibe.http.websockets;
 import vibe.http.server;
 import vibe.http.router;
+import vibe.http.client;
 import vibe.stream.tls;
 import vibe.web.web;
 
