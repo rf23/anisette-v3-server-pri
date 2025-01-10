@@ -45,6 +45,21 @@ __gshared Device v1Device;
 
 __gshared Duration timeout;
 
+void selfPing() 
+@safe nothrow {
+		import vibe.http.client;
+		logInfo("The ping time is: %s", Clock.currTime());
+		requestHTTP("https://anisette-v3-server-pri.onrender.com/",
+			(scope req) {
+				req.method = HTTPMethod.GET;
+				//req.writeJsonBody(["name": "My Name"]);
+			},
+			(scope res) {
+				logInfo("Response: %s", res.bodyReader.readAllUTF8());
+			}
+		);
+}	
+
 int main(string[] args) {
 	debug {
 		configureLoggingProvider(new shared DefaultProvider(true, Levels.DEBUG));
@@ -184,20 +199,7 @@ int main(string[] args) {
 	//
 	// self ping to keep it alive
 	//
-	void selfPing() 
-	@safe nothrow {
-		
-		logInfo("The ping time is: %s", Clock.currTime());
-		requestHTTP("https://anisette-v3-server-pri.onrender.com/",
-			(scope req) {
-				req.method = HTTPMethod.GET;
-				//req.writeJsonBody(["name": "My Name"]);
-			},
-			(scope res) {
-				logInfo("Response: %s", res.bodyReader.readAllUTF8());
-			}
-		);
-	}	
+	
 	auto timer = setTimer(60.seconds, &selfPing, true);
 
 	return runApplication(&args);
