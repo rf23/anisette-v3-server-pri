@@ -208,9 +208,9 @@ int main(string[] args) {
 	auto keepalive = environment.get("KEEPALIVE", "60");
 	if (keepalive is null)
 	{
-		keepalive = 60;
+		keepalive = "60";
 	}
-	auto timer = setTimer(seconds(keepalive), () => selfPing(), true);
+	auto timer = setTimer(seconds(to!int(keepalive)), () => selfPing(), true);
 
 	return runApplication(&args);
 }
