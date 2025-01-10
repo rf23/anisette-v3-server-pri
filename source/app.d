@@ -63,9 +63,11 @@ void selfPing()
 		},
 		(scope res) {
 			logInfo("Response code: %s", res.statusCode);
-			JSONValue json = parseJSON(res.bodyReader.readAllUTF8());
-			logInfo("Resonse Client time: %s", json["X-Apple-I-Client-Time"].str);
-			// logInfo("Response: %s", res.bodyReader.readAllUTF8());
+			if (res.statusCode == 200) {
+				JSONValue json = parseJSON(res.bodyReader.readAllUTF8());
+				logInfo("Resonse Client time: %s", json["X-Apple-I-Client-Time"].str);
+				// logInfo("Response: %s", res.bodyReader.readAllUTF8());
+			}
 		}
 	);
 }	
