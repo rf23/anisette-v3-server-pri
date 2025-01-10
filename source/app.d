@@ -18,6 +18,7 @@ import std.uuid;
 import std.zip;
 import std.datetime;
 import std.process : environment;
+import std.typecons : Flag, Yes, No;
 
 import vibe.core.core;
 import vibe.core.log;
