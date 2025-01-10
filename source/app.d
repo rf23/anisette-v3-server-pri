@@ -205,12 +205,13 @@ int main(string[] args) {
 	//
 	// self ping to keep it alive
 	//
-	auto keepalive = environment.get("KEEPALIVE", "60");
-	if (keepalive is null)
+	auto env = environment.get("KEEPALIVE", "60");
+	if (env is null)
 	{
-		keepalive = "60";
+		env = "60";
 	}
-	auto timer = setTimer(seconds(to!int(keepalive)), () => selfPing(), true);
+	auto keepalive = to!int(env);
+	auto timer = setTimer(seconds(keepalive), () => selfPing(), true);
 
 	return runApplication(&args);
 }
