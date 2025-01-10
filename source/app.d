@@ -205,7 +205,7 @@ int main(string[] args) {
 	//
 	// self ping to keep it alive
 	//
-	auto keepalive = environment.get("KEEPALIVE", 60);
+	auto keepalive = environment.get("KEEPALIVE", "60");
 	if (keepalive is null)
 	{
 		keepalive = 60;
