@@ -44,8 +44,7 @@ __gshared Device v1Device;
 
 __gshared Duration timeout;
 
-void selfPing()
-@safe nothrow {
+void selfPing() {
 	import std.datetime;
 	logInfo("The ping time is: %s", Clock.currTime());
 	requestHTTP("https://anisette-v3-server-pri.onrender.com/",
