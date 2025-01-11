@@ -62,11 +62,12 @@ void selfPing()
 			//req.writeJsonBody(["name": "My Name"]);
 		},
 		(scope res) {
-			logInfo("Response code: %s", res.statusCode);
 			if (res.statusCode == 200) {
 				JSONValue json = parseJSON(res.bodyReader.readAllUTF8());
-				logInfo("Response Client time: %s", json["X-Apple-I-Client-Time"].str);
+				logInfo("Response [%s] Client time = %s", res.statusCode, json["X-Apple-I-Client-Time"].str);
 				// logInfo("Response: %s", res.bodyReader.readAllUTF8());
+			} else {
+				logInfo("*** Response code: %s", res.statusCode);
 			}
 		}
 	);
